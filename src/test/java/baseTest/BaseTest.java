@@ -67,6 +67,7 @@ public class BaseTest {
 	public char[] pinArray;
 	public BasePage basePage;
 	
+	//Deletes all image files from the reports folder
 	@BeforeSuite
 	public void cleanupImages(ITestContext testContext) {
 		if(!testContext.getSuite().getName().equalsIgnoreCase("Default Suite")){
@@ -90,7 +91,7 @@ public class BaseTest {
 		}
 	}
     }
-	
+	//Starts Driver on port
 	@BeforeMethod
 	public void configureAppium(Method method){
 		UiAutomator2Options options=new UiAutomator2Options();
@@ -129,6 +130,7 @@ public class BaseTest {
 		});
 		return data;
 	}
+	//Reads Json File and returns HashMap
 	public HashMap<String, String> getJsonDatatoMap(String filePath) throws IOException {
 		String jsonContent=FileUtils.readFileToString(new File(filePath),StandardCharsets.UTF_8);
 		ObjectMapper mapper=new ObjectMapper();
@@ -136,14 +138,14 @@ public class BaseTest {
 		});
 		return data;
 	}
-	
+	//Stores password and pin in global variables
 	public void getData() throws IOException{
-		
 		HashMap<String,String> pass=getJsonDatatoMap(System.getProperty("user.dir")+"//src//test//java//data//credentials.json");
 		password=pass.get("password");
 		HashMap<String,String> pins=getJsonDatatoMap(System.getProperty("user.dir")+"//src//test//java//data//pin.json");
 		pinArray=pins.get("pin").toCharArray();
 	}
+	//Updates Password in Json File
 	public void updatePassword(String new_password) throws StreamWriteException, DatabindException, IOException {
 		HashMap<String, String> data=new HashMap<String,String>();
 		try {
@@ -169,7 +171,7 @@ public class BaseTest {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.writerWithDefaultPrettyPrinter().writeValue(new File(System.getProperty("user.dir")+"//src//test//java//data//pin.json"), data);
 	}
-	
+	//Sends Email with extent report attached
 	@AfterSuite
 	public void sendEmail(ITestContext testContext) {
 		if(!testContext.getSuite().getName().equalsIgnoreCase("Default Suite")){
@@ -214,7 +216,7 @@ public class BaseTest {
 	        cleanUp();
 		}
 	}
-	
+	//Sets Post-Conditions after suite run
 	private void cleanUp() {
 		UiAutomator2Options options=new UiAutomator2Options();
 		options.setCapability("udid", "emulator-5554");
