@@ -108,7 +108,7 @@ public class BasePage {
 	public void waitForWelcomeScreen() {
 		new WebDriverWait(driver,Duration.ofSeconds(30)).until(ExpectedConditions.presenceOfElementLocated(welcomeScreen));
 	}
-	
+	//Goes tobackground for indefinite Time
 	public void gotoBackground() {
 		driver.runAppInBackground(Duration.ofSeconds(-1));
 	}
@@ -124,7 +124,7 @@ public class BasePage {
 		.addAction(finger.createPointerDown(MouseButton.LEFT.asArg())) .addAction(finger.createPointerUp(MouseButton.LEFT.asArg())); 
 		driver.perform(Arrays.asList(clickPosition));
 	}
-	
+	//Goes to Background for indefinite time and turns off network
 	public void backgroundAndOffline() {
 		driver.runAppInBackground(Duration.ofSeconds(-1));
 		driver.setConnection(new ConnectionStateBuilder().withWiFiDisabled().build());
